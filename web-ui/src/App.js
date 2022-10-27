@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import useWebSocket, { ReadyState } from "react-use-websocket";
+import "./App.css";
+import { useEffect, useState } from "react";
+import Scoreboard from "./Scoreboard";
 
 function App() {
+  const { sendMessage, lastMessage, readyState } = useWebSocket(
+    process.env.REACT_APP_WEBSOCKET_URL
+  );
+
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    if (!lastMessage) {
+      return;
+    }
+
+    const data = JSON.parse(lastMessage.data);
+
+    switch (data.action) {
+      case "update_score":
+        setScore(data.score);
+        return;
+      default:
+        console.log(`unrecognized websocket action: ${data}`);
+    }
+  }, [lastMessage]);
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: "Connecting",
+    [ReadyState.OPEN]: "Open",
+    [ReadyState.CLOSING]: "Closing",
+    [ReadyState.CLOSED]: "Closed",
+    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+  }[readyState];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Whack A Mole</h1>
+      {readyState === ReadyState.OPEN ? (
+        <Scoreboard score={score} />
+      ) : (
+        <h2>Connecting to the backend (status {connectionStatus})...</h2>
+      )}
     </div>
   );
 }
