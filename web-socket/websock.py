@@ -1,25 +1,24 @@
 from flask import Flask, render_template
 from flask_sock import Sock
 import json
+from piGPIO import Button
 
 
 app = Flask(__name__, static_folder='../web-ui/build', static_url_path='/')
 sock = Sock(app)
 
 
-@sock.route('/socket')
-def echo(sock):
+def message():
     msg = json.dumps({
         'action': 'update_score',
-        'score': 10
+        'score': num + 1
     })
-    sock.send(msg)
+    return msg
 
-    while True:
 
-        message = sock.receive()
-
-        sock.send(message + ' from server')
+@sock.route('/socket')
+def echo(sock):
+    Button(2).when_pressed = lambda: sock.send(message())
 
 
 @app.route('/', defaults={'path': ''})
@@ -29,4 +28,6 @@ def catch_all(path):
 
 
 if __name__ == "__main__":
+    global num
+    num = 0
     app.run()

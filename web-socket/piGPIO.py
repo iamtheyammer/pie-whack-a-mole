@@ -1,16 +1,14 @@
-import RPI.GPIO as GPIO
+from gpiozero import Button
 
 
-class piGPIO:
-    def __init__(self):
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setwarnings(False)
+class Button(Button):
+    def __init__(self, pin):
+        super(Button, self).__init__(pin)
+        self.when_pressed = self.when_pressed
+        self.when_released = self.when_released
 
-    def setPin(self, pin):
-        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    def when_pressed(self):
+        print("Pressed")
 
-    def getPin(self, pin):
-        return GPIO.input(pin)
-
-    def cleanup(self):
-        GPIO.cleanup()
+    def when_released(self):
+        print("Released")
