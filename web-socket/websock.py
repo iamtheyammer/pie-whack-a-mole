@@ -19,7 +19,8 @@ def message():
 
 @sock.route('/socket')
 def echo(sock):
-    Button(2).when_pressed = lambda: sock.send(message())
+    while True:
+        Button(2).when_pressed = lambda: sock.send(message())
 
 
 @app.route('/', defaults={'path': ''})
