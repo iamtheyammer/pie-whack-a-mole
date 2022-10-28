@@ -21,7 +21,7 @@ def message(sock, num):
 def echo(sock):
     num = 0
     while True:
-        if Button(2).is_pressed:
+        if Button(2, hold_repeat=False).is_pressed:
             num += 1
             message(sock, num)
 
