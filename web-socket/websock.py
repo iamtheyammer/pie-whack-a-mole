@@ -9,9 +9,10 @@ sock = Sock(app)
 
 
 def message():
+    num += 1
     msg = json.dumps({
         'action': 'update_score',
-        'score': num + 1
+        'score': num
     })
     print(f"<-- {msg}")
     return msg
