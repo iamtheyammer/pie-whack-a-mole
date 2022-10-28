@@ -9,7 +9,6 @@ sock = Sock(app)
 
 
 def message(sock, num):
-    num += 1
     msg = json.dumps({
         'action': 'update_score',
         'score': num
@@ -34,6 +33,4 @@ def catch_all(path):
 
 
 if __name__ == "__main__":
-    global num
-    num = 0
-    app.run()
+    app.run(host='0.0.0.0')
