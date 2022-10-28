@@ -12,3 +12,7 @@ class Button(Button):
 
     def when_released(self):
         print("Released")
+
+
+Button = Button(2)
+Button.when_pressed = lambda: print("Pressed")

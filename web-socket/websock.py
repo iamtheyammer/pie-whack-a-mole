@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sock import Sock
 import json
-from piGPIO import Button
+from gpiozero import Button
 
 
 app = Flask(__name__, static_folder='../web-ui/build', static_url_path='/')
