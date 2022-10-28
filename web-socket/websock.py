@@ -13,6 +13,7 @@ def message():
         'action': 'update_score',
         'score': num + 1
     })
+    print(f"<-- {msg}")
     return msg
 
 
