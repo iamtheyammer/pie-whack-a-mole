@@ -8,20 +8,23 @@ app = Flask(__name__, static_folder='../web-ui/build', static_url_path='/')
 sock = Sock(app)
 
 
-def message():
+def message(sock, num):
     num += 1
     msg = json.dumps({
         'action': 'update_score',
         'score': num
     })
     print(f"<-- {msg}")
-    return msg
+    sock.send(msg)
 
 
 @sock.route('/socket')
 def echo(sock):
+    num = 0
     while True:
-        Button(2).when_pressed = lambda: sock.send(message())
+        if Button(2).is_pressed:
+            num += 1
+            message(sock, num)
 
 
 @app.route('/', defaults={'path': ''})
