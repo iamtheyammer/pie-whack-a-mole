@@ -11,11 +11,12 @@ const StyledScoreboard = styled.div`
 `;
 
 const StyledScoreText = styled.span`
+  font-size: 12vh;
   text-align: left;
 `;
 
 const StyledScore = styled.span`
-  font-size: 10vh;
+  font-size: 30vh;
   border-radius: 10px;
   border: 2px solid #137547;
   min-width: 250px;
