@@ -20,13 +20,14 @@ body {
 .main {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
+    align-items: center;
     justify-content: space-between;
 }
 
 .main > div:nth-child(1) {
     display: flex;
-    align-items: flex-start;
+    flex-direction: row;
+    align-tracks: flex-start;
     border: rgb(215, 76, 76) solid 1px;
 }
 
@@ -42,7 +43,7 @@ body {
 .TopAnimation {
     display: inline-block;
     position: relative;
-    max-height: 170px;;
+    max-height: 240px;;
 }
 
 .TopAnimation > div:nth-child(2) {
@@ -51,7 +52,7 @@ body {
 }
 .hole {
     position: absolute;
-    left: 34%;
+    left: 39%;
     top: 12vh;
 }
 

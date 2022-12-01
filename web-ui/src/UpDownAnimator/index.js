@@ -16,8 +16,6 @@ const popup = keyframes`
 const Popup = styled.div`
   display: inline-block;
   animation: ${popup} 2s linear infinite;
-  padding: 2rem 1rem;
-  font-size: 1.2rem;
 `;
 
 function UpDownAnimator({ children }) {

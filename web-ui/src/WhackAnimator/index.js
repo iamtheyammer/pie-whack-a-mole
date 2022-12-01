@@ -16,10 +16,7 @@ const whack = keyframes`
 `;
 
 const Whack = styled.div`
-  display: inline-block;
   animation: ${whack} 2s linear infinite;
-  padding: 2rem 1rem;
-  font-size: 1.2rem;
 `;
 
 function WhackAnimator({ children }) {
