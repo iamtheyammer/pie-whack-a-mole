@@ -5,8 +5,7 @@ from Serial import SerialRead, SerialWrite
 from time import sleep
 import sqlite3
 
-# app = Flask(__name__, static_folder='../web-ui/build', static_url_path='/')
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../web-ui/build', static_url_path='/')
 sock = Sock(app)
 count = 0
 scores = [
