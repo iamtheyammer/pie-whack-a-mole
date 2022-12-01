@@ -4,7 +4,9 @@ import json
 from Serial import SerialRead, SerialWrite
 from time import sleep
 import sqlite3
+import os
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
 app = Flask(__name__, static_folder='../web-ui/build', static_url_path='/')
 sock = Sock(app)
 count = 0
@@ -40,7 +42,8 @@ def update_leaderboard_message(sock, ldb):
 
 @sock.route('/socket')
 def echo(sock):
-    connection = sqlite3.connect('ScoreDB/scores.db')
+    print(dir_path)
+    connection = sqlite3.connect(f'{dir_path}/ScoreDB/scores.db')
     cursor = connection.cursor()
     cursor.execute(
         "create table if not exists scores (person text PRIMARY KEY, score integer)")
