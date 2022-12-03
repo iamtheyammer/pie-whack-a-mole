@@ -1,27 +1,34 @@
 import styled from "styled-components";
 
 const Input = styled.input`
-    font-size: 1.5rem;
+    font-size: 4rem;
     padding: 0.5rem;
-    margin: 0.5rem;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
+    margin: 0.1rem;
+    margin-left: 5rem;
+    border: 2px solid #137547;
+    border-radius: 10px;
+    background-color: #054a29;
+    color: whitesmoke;
+    font-family: "VT323", monospace;
 `;
 
 const Button = styled.button`
-    font-size: 1.5rem;
+    font-size: 4rem;
     padding: 0.5rem;
-    margin: 0.5rem;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
+    margin: 0.1rem;
+    border: 2px solid #137547;
+    border-radius: 10px;
+    background-color: #054a29;
+    color: whitesmoke;
+    font-family: "VT323", monospace;
 `;
 
-function PlayerInput({ text, onSubmit }) {
+function PlayerInput({ text, onChange, onSubmit, value }) {
     return (
-        <div>
-            <Input type="text" placeholder={text} />
+        <form onSubmit={onSubmit}>
+            <Input type="text" placeholder={text} onChange={onChange} value={value}/>
             <Button onClick={onSubmit}>Submit</Button>
-        </div>
+        </form>
     );
 }
 

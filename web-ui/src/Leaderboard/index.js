@@ -12,8 +12,8 @@ const StyledLeaderboard = styled.div`
 `;
 
 const ScrollContainer = styled.div`
-    min-height: 50vh;
-    max-height: 50vh;
+    min-height: 55vh;
+    max-height: 55vh;
     overflow-y: scroll;
 `;
 
@@ -57,18 +57,21 @@ function Leaderboard({ leaders }) {
                 </StyledColumn>
             </StyledRow>
             <ScrollContainer>
-                {leaders.map((score, i) => (
-                    <StyledRow key={i}>
-                        <StyledColumn key={i + 1}>
-                            <StyledScore>{score.person}</StyledScore>
-                            <br />
-                        </StyledColumn>
-                        <StyledColumn>
-                            <StyledScore>{score.value}</StyledScore>
-                            <br />
-                        </StyledColumn>
-                    </StyledRow>
-                ))}
+                {
+                    leaders.length > 0 ?
+                    leaders.map((score, i) => (
+                        <StyledRow key={i}>
+                            <StyledColumn key={i + 1}>
+                                <StyledScore>{score.person}</StyledScore>
+                                <br />
+                            </StyledColumn>
+                            <StyledColumn>
+                                <StyledScore>{score.value}</StyledScore>
+                                <br />
+                            </StyledColumn>
+                        </StyledRow>
+                    )) : null
+                }
             </ScrollContainer>
         </StyledLeaderboard>
     );
