@@ -39,6 +39,7 @@ def update_leaderboard_message(sock, ldb):
 def receive_ws(sock, cursor, connection):
     global count
     msg = sock.receive()
+    # TODO: have a global game_state variable which changes when the score is being counted, etc. It will change on a received call from the ws.
     if msg is not None:
         msg = json.loads(msg)
         if msg['action'] == 'start_game':

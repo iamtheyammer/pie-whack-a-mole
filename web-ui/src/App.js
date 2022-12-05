@@ -17,20 +17,41 @@ function App() {
 
   const [score, setScore] = useState(0);
   const [leaders, setLeaders] = useState([]);
-  const [inputText, setInputText] = useState("");
+  const [displayedInput, setDisplayedInput] = useState("");
+  const [userInput, setUserInput] = useState("");
   const [submitAnimation, setSubmitAnimation] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (inputText.length > 15) {
-      setInputText(inp => inp.substring(0, 15))
-      console.log(inputText);
+    // TODO: strip whitespaces and cleanup input before sending
+    // add screen goes red on wrong mole hit
+    // repalce /1029 with /#### for reset password
+    if (userInput[0] === "/") {
+      if (userInput === "/1029") {
+        alert("Leaderboard reset")
+        resetLdb();
+      } else {
+        alert("Incorrect password")
+      }
+      setUserInput("")
+      e.target.value = setDisplayedInput("")
+    } else {
+      sendMessage(JSON.stringify({ "action": "start_game", "currentPlayer": userInput }))
+      e.target.value = setDisplayedInput("")
+      setUserInput("")
+      setSubmitAnimation(true)
     }
-    sendMessage(JSON.stringify({ "action": "start_game", "currentPlayer": `${inputText}` }))
-    e.target.value = setInputText("")
-    setSubmitAnimation(true)
   }
 
+  const handleInputChange = (e) => {
+    if (e.target.value[0] === "/") {
+      setUserInput((prev) => `${prev + e.target.value.slice(-1)}`)
+      setDisplayedInput(`/${"*".repeat(e.target.value.length - 1)}`)
+    } else {
+      setUserInput(e.target.value)
+      setDisplayedInput(e.target.value)
+    }
+  }
   const resetLdb = () => {
     sendMessage(JSON.stringify({ "action": "reset_leaderboard" }))
   }
@@ -47,7 +68,6 @@ function App() {
         setScore(data.score);
         return;
       case "update_leaderboard":
-        console.log(data.leaderboard);
         setLeaders(data.leaderboard);
         return;
       default:
@@ -74,8 +94,8 @@ function App() {
         <div className="main">
           <div>
             <div>
-              <ScaleAnimator children={<PlayerInput text="Enter your name" onChange={(e) => { setInputText(e.target.value) }} onSubmit={handleSubmit} value={inputText} />} submitted={submitAnimation} />
-              <button className="resetldb" onClick={resetLdb}>Reset Leaderboard</button>
+              <ScaleAnimator children={<PlayerInput text="Enter your name" onChange={handleInputChange} onSubmit={handleSubmit} value={displayedInput} />} submitted={submitAnimation} />
+              {/* <button className="resetldb" onClick={resetLdb}>Reset Leaderboard</button> */}
             </div>
             <div><Scoreboard score={score} /></div>
           </div>
@@ -86,6 +106,9 @@ function App() {
           <h2>Connecting to the backend (status {connectionStatus})...</h2>
         </>
       )}
+      <div className="BottomTextContainer">
+      <span>Enter /pass to reset leaderboard</span>
+      </div>
     </div>
   );
 }

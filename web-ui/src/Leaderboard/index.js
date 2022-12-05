@@ -62,7 +62,7 @@ function Leaderboard({ leaders }) {
                     leaders.map((score, i) => (
                         <StyledRow key={i}>
                             <StyledColumn key={i + 1}>
-                                <StyledScore>{score.person}</StyledScore>
+                                <StyledScore>{`${score.person.length > 10 ? `${score.person.substring(0, 9)}..` : score.person}`}</StyledScore>
                                 <br />
                             </StyledColumn>
                             <StyledColumn>

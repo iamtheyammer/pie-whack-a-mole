@@ -48,10 +48,12 @@ body {
     top: 12vh;
 }
 
-.resetldb {
+.BottomTextContainer {
+    width: fit-content;
     font-size: 2rem;
     padding: 0.5rem;
-    margin: 1.5rem;
+    margin-left: 1rem;
+    margin-bottom: 0;
     border: 2px solid #137547;
     border-radius: 10px;
     background-color: #054a29;
