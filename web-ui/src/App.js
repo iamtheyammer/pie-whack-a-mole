@@ -27,7 +27,7 @@ function App() {
     // add screen goes red on wrong mole hit
     // repalce /1029 with /#### for reset password
     if (userInput[0] === "/") {
-      if (userInput === "/1029") {
+      if (userInput === `/${process.env.REACT_APP_LDB_RESET_PASS}`) {
         alert("Leaderboard reset")
         resetLdb();
       } else {
