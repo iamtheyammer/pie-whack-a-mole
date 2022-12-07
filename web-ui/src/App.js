@@ -9,6 +9,7 @@ import ScaleAnimator from "./ScaleAnimator";
 import PlayerInput from "./PlayerInput";
 import mallet from "./mallet.png";
 import hole from "./hole.png";
+import Countdown from "react-countdown";
 
 function App() {
   const { sendMessage, lastMessage, readyState } = useWebSocket(
@@ -25,7 +26,7 @@ function App() {
     e.preventDefault()
     // TODO: strip whitespaces and cleanup input before sending
     // add screen goes red on wrong mole hit
-    // repalce /1029 with /#### for reset password
+    // add medals for top 3
     if (userInput[0] === "/") {
       if (userInput === `/${process.env.REACT_APP_LDB_RESET_PASS}`) {
         alert("Leaderboard reset")
@@ -52,9 +53,29 @@ function App() {
       setDisplayedInput(e.target.value)
     }
   }
+
   const resetLdb = () => {
     sendMessage(JSON.stringify({ "action": "reset_leaderboard" }))
   }
+
+  // Renderer callback with condition
+  const countdownRenderer = ({ minutes, seconds, completed }) => {
+    if (completed) {
+      return (
+        <div className="countdownWrapper">
+          <span className="countdownTitle">Timer</span>
+          <span className="countdown">{0}:{0}</span>
+        </div>
+      )
+    } else {
+      return (
+        <div className="countdownWrapper">
+          <span className="countdownTitle">Timer</span>
+          <span className="countdown">{minutes}:{seconds}</span>
+        </div>
+      )
+    }
+  };
 
   useEffect(() => {
     if (!lastMessage) {
@@ -94,10 +115,24 @@ function App() {
         <div className="main">
           <div>
             <div>
-              <ScaleAnimator children={<PlayerInput text="Enter your name" onChange={handleInputChange} onSubmit={handleSubmit} value={displayedInput} />} submitted={submitAnimation} />
-              {/* <button className="resetldb" onClick={resetLdb}>Reset Leaderboard</button> */}
+              <ScaleAnimator
+                children={
+                  <PlayerInput
+                    text="Enter your name"
+                    onChange={handleInputChange}
+                    onSubmit={handleSubmit}
+                    value={displayedInput} />
+                } submitted={submitAnimation}
+              />
             </div>
             <div><Scoreboard score={score} /></div>
+          </div>
+          <div>
+            <Countdown
+              date={Date.now() + 10000}
+              zeroPadTime = {2}
+              renderer={countdownRenderer}
+            />
           </div>
           <div><Leaderboard leaders={leaders} /></div>
         </div>
@@ -107,7 +142,7 @@ function App() {
         </>
       )}
       <div className="BottomTextContainer">
-      <span>Enter /pass to reset leaderboard</span>
+        <span>Enter /password to reset leaderboard</span>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const Button = styled.button`
 function PlayerInput({ text, onChange, onSubmit, value }) {
     return (
         <form onSubmit={onSubmit}>
-            <Input type="text" placeholder={text} onChange={onChange} value={value}/>
+            <Input autoFocus type="text" placeholder={text} onChange={onChange} value={value}/>
             <Button onClick={onSubmit}>Submit</Button>
         </form>
     );
