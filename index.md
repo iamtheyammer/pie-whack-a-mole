@@ -1,8 +1,3 @@
----
-title: Whac-A-Mole
-layout: template
-filename: index
---- 
 # Whac-A-Mole
 ## Contributors: Tyler Ewald, Clay Oates, Adhishri Hande, Sam Mendelson, Anmol Sandhu
 
