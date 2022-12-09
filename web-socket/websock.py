@@ -42,11 +42,17 @@ def receive_ws(sock, cursor, connection):
     # TODO: have a global game_state variable which changes when the score is being counted, etc. It will change on a received call from the ws.
     if msg is not None:
         msg = json.loads(msg)
-        if msg['action'] == 'start_game':
-            args = (msg['currentPlayer'], 0, count, count)
-            cursor.execute(
-                f"insert into scores (person, score) values (?, ?) ON CONFLICT (person) DO UPDATE SET score = ? WHERE ? > score", args)
-            connection.commit()
+        if msg['action'] == 'game_state':
+            if msg['gameState'] == "start_game":
+                args = (msg['currentPlayer'], 0, count, count)
+                cursor.execute(
+                    f"insert into scores (person, score) values (?, ?) ON CONFLICT (person) DO UPDATE SET score = ? WHERE ? > score", args)
+                connection.commit()
+            elif msg['gameState'] == "end_game":
+                args = (msg['currentPlayer'], 0, count, count)
+                cursor.execute(
+                    f"insert into scores (person, score) values (?, ?) ON CONFLICT (person) DO UPDATE SET score = ? WHERE ? > score", args)
+                connection.commit()
         elif msg['action'] == 'reset_leaderboard':
             cursor.execute("delete from scores where score >= 0")
             connection.commit()

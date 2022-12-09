@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { useEffect, useState } from "react";
 
 const submitScale = keyframes`
     0% {
@@ -19,8 +20,17 @@ const Anim = styled.div`
 `;
 
 function ScaleAnimator({ children, submitted }) {
+    const [animationRunning, setAnimationRunning] = useState(false);
+
+    useEffect(() => {
+        setAnimationRunning(true);
+        setTimeout(() => {
+            setAnimationRunning(false);
+        }, 500);
+    }, [submitted]);
+
     return (
-        <Anim submitted={submitted}>
+        <Anim submitted={animationRunning}>
             {children}
         </Anim>
     );

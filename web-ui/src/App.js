@@ -1,6 +1,6 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Scoreboard from "./Scoreboard";
 import Leaderboard from "./Leaderboard";
 import UpDownAnimator from "./UpDownAnimator";
@@ -20,13 +20,15 @@ function App() {
   const [leaders, setLeaders] = useState([]);
   const [displayedInput, setDisplayedInput] = useState("");
   const [userInput, setUserInput] = useState("");
-  const [submitAnimation, setSubmitAnimation] = useState(false);
+  const [submitAnimation, setSubmitAnimation] = useState([0]);
+  const countdownRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault()
     // TODO: strip whitespaces and cleanup input before sending
     // add screen goes red on wrong mole hit
     // add medals for top 3
+    // hide scrollbar on scroallable container, style it in css
     if (userInput[0] === "/") {
       if (userInput === `/${process.env.REACT_APP_LDB_RESET_PASS}`) {
         alert("Leaderboard reset")
@@ -37,10 +39,10 @@ function App() {
       setUserInput("")
       e.target.value = setDisplayedInput("")
     } else {
-      sendMessage(JSON.stringify({ "action": "start_game", "currentPlayer": userInput }))
+      sendMessage(JSON.stringify({ "action": "game_state", "gameState": "start_game", "currentPlayer": userInput }))
       e.target.value = setDisplayedInput("")
-      setUserInput("")
-      setSubmitAnimation(true)
+      setSubmitAnimation(submitAnimation.concat(1))
+      countdownRef.current.start()
     }
   }
 
@@ -52,6 +54,11 @@ function App() {
       setUserInput(e.target.value)
       setDisplayedInput(e.target.value)
     }
+  }
+
+  const timerEndHandler = () => {
+    sendMessage(JSON.stringify({ "action": "game_state", "gameState": "end_game", "currentPlayer": userInput }))
+    setUserInput("")
   }
 
   const resetLdb = () => {
@@ -115,23 +122,24 @@ function App() {
         <div className="main">
           <div>
             <div>
-              <ScaleAnimator
-                children={
-                  <PlayerInput
-                    text="Enter your name"
-                    onChange={handleInputChange}
-                    onSubmit={handleSubmit}
-                    value={displayedInput} />
-                } submitted={submitAnimation}
-              />
+              <ScaleAnimator submitted={submitAnimation}>
+                <PlayerInput
+                  text="Enter your name"
+                  onChange={handleInputChange}
+                  onSubmit={handleSubmit}
+                  value={displayedInput} />
+              </ScaleAnimator>
             </div>
             <div><Scoreboard score={score} /></div>
           </div>
           <div>
             <Countdown
               date={Date.now() + 10000}
-              zeroPadTime = {2}
+              zeroPadTime={2}
               renderer={countdownRenderer}
+              autoStart={false}
+              onComplete={timerEndHandler}
+              ref={countdownRef}
             />
           </div>
           <div><Leaderboard leaders={leaders} /></div>
