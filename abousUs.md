@@ -1,7 +1,7 @@
 ---
 title: About Us
 layout: template
-filename: aboutUS
+filename: aboutUS.md
 --- 
 ### About the Creators
 
