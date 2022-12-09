@@ -62,7 +62,7 @@ MVP:
 **[Tyler Ewald](https://github.com/idk)** 
 [...]
 
-<br><br>
+<br><br><br><br><br>
 
 <img src="website-images/Clay.jpeg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
 
