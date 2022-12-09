@@ -51,6 +51,9 @@ MVP:
 
 [Whac-A-Mole](https://www.youtube.com/watch?v=Sm--6dE8Xso)
 
+### Project Subteams
+
+- [Mechanical](./mechanical.md)
 
 ### About the Creators
 
