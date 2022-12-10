@@ -5,7 +5,7 @@ import Scoreboard from "./Scoreboard";
 import Leaderboard from "./Leaderboard";
 import UpDownAnimator from "./UpDownAnimator";
 import WhackAnimator from "./WhackAnimator";
-import ScaleAnimator from "./ScaleAnimator";
+import BannerAnimator from "./BannerAnimator";
 import PlayerInput from "./PlayerInput";
 import mallet from "./mallet.png";
 import hole from "./hole.png";
@@ -20,7 +20,7 @@ function App() {
   const [leaders, setLeaders] = useState([]);
   const [displayedInput, setDisplayedInput] = useState("");
   const [userInput, setUserInput] = useState("");
-  const [submitAnimation, setSubmitAnimation] = useState([0]);
+  const [submitAnimation, setSubmitAnimation] = useState(false);
   const countdownRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -41,7 +41,7 @@ function App() {
     } else {
       sendMessage(JSON.stringify({ "action": "game_state", "gameState": "start_game", "currentPlayer": userInput }))
       e.target.value = setDisplayedInput("")
-      setSubmitAnimation(submitAnimation.concat(1))
+      setSubmitAnimation(true)
       countdownRef.current.start()
     }
   }
@@ -65,7 +65,13 @@ function App() {
     sendMessage(JSON.stringify({ "action": "reset_leaderboard" }))
   }
 
-  // Renderer callback with condition
+  useEffect(() => {
+    setSubmitAnimation(true)
+    setTimeout(() => {
+      setSubmitAnimation(false);
+    }, 500);
+  }, [submitAnimation]);
+
   const countdownRenderer = ({ minutes, seconds, completed }) => {
     if (completed) {
       return (
@@ -113,44 +119,47 @@ function App() {
 
   return (
     <div className="App">
-      <div className="TopAnimation">
-        <img src={hole} width="450px" height="60px" className="hole" alt="black hole" />
-        <WhackAnimator children={<img src={mallet} width="130px" height="130px" alt="whacking hammer animation" className="mallet" />} />
-        <UpDownAnimator children={<h1>Whack A Mole</h1>} />
-      </div>
-      {readyState === ReadyState.OPEN ? (
-        <div className="main">
-          <div>
+      <BannerAnimator submitted={submitAnimation}>
+        Whack A Mole
+      </BannerAnimator>
+      <div className="AppContent">
+        <div className="TopAnimation">
+          <img src={hole} width="450px" height="60px" className="hole" alt="black hole" />
+          <WhackAnimator children={<img src={mallet} width="130px" height="130px" alt="whacking hammer animation" className="mallet" />} />
+          <UpDownAnimator children={<h1>Whack A Mole</h1>} />
+        </div>
+        {readyState === ReadyState.OPEN ? (
+          <div className="main">
             <div>
-              <ScaleAnimator submitted={submitAnimation}>
+              <div>
                 <PlayerInput
                   text="Enter your name"
                   onChange={handleInputChange}
                   onSubmit={handleSubmit}
                   value={displayedInput} />
-              </ScaleAnimator>
+              </div>
+              <div><Scoreboard score={score} /></div>
             </div>
-            <div><Scoreboard score={score} /></div>
+            <div>
+              <Countdown
+                date={Date.now() + 10000}
+                zeroPadTime={2}
+                renderer={countdownRenderer}
+                autoStart={false}
+                onComplete={timerEndHandler}
+                ref={countdownRef}
+              />
+            </div>
+            <div><Leaderboard leaders={leaders} /></div>
           </div>
-          <div>
-            <Countdown
-              date={Date.now() + 10000}
-              zeroPadTime={2}
-              renderer={countdownRenderer}
-              autoStart={false}
-              onComplete={timerEndHandler}
-              ref={countdownRef}
-            />
-          </div>
-          <div><Leaderboard leaders={leaders} /></div>
+        ) : (
+          <>
+            <h2>Connecting to the backend (status {connectionStatus})...</h2>
+          </>
+        )}
+        <div className="BottomTextContainer">
+          <span>Enter /password to reset leaderboard</span>
         </div>
-      ) : (
-        <>
-          <h2>Connecting to the backend (status {connectionStatus})...</h2>
-        </>
-      )}
-      <div className="BottomTextContainer">
-        <span>Enter /password to reset leaderboard</span>
       </div>
     </div>
   );

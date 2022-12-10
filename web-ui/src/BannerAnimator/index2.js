@@ -20,17 +20,8 @@ const Anim = styled.div`
 `;
 
 function ScaleAnimator({ children, submitted }) {
-    const [animationRunning, setAnimationRunning] = useState(false);
-
-    useEffect(() => {
-        setAnimationRunning(true);
-        setTimeout(() => {
-            setAnimationRunning(false);
-        }, 500);
-    }, [submitted]);
-
     return (
-        <Anim submitted={animationRunning}>
+        <Anim submitted={submitted}>
             {children}
         </Anim>
     );
