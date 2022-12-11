@@ -25,10 +25,10 @@ For Sprint 2, we were able to hook up one pneumatic piston to allow one mole to 
 
 ## Sprint 3
 
-<img src="website-images/mechanical/sprint_3-1.gif" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
-<img src="website-images/mechanical/sprint_3-2.gif" width ="20%" height = "30%" style="float:right;margin:0px 10px 0px 0px">
+<img src="website-images/mechanical/sprint_3-1.JPG" width ="45%" height = "50%" style="float:left;margin:16px 10px 0px 0px">
+<img src="website-images/mechanical/sprint_3-2.gif" width ="45%" height = "55%" style="float:right;margin:0px 10px 0px 0px">
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 For Sprint 3, we did make quite a jump in scale. We were able to get three moles to move up and down using a pneumatic system, air compressor, and solenoids. We were also able to create a real arcade console looking structure, with a monitor on the inside! This gives players of our whack-a-mole game the feeling that they are at a real arcade! As sustainability was something we wanted to keep in mind, we 3-d printed only one kind of piece. Also, there is no glue used in the mechanical system since we want to take the entire thing a part at the end of the project, to allow others to use our scrap wood and other parts. This minimizes waste and the collection of old, sitting projects, where the parts can be reused. 
 
