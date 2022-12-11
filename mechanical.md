@@ -8,7 +8,7 @@ filename: mechanical.md
 ## Sprint 1
 
 <img src="website-images/mechanical/sprint_1-1.gif" width ="45%" height = "45%" style="float:left;margin:0px 10px 0px 0px">
-<img src="website-images/mechanical/sprint_1-2.gif" width ="45%" height = "45%" style="float:right;margin:0px 10px 0px 0px">
+<img src="website-images/mechanical/sprint_1-2.gif" width ="45%" height = "40%" style="float:right;margin:0px 10px 0px 0px">
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
@@ -17,7 +17,7 @@ For the first sprint, we wanted to create a proof of concept. We had a cam syste
 ## Sprint 2
 
 <img src="website-images/mechanical/sprint_2-1.gif" width ="45%" height = "45%" style="float:left;margin:0px 10px 0px 0px">
-<img src="website-images/mechanical/sprint_2-2.gif" width ="45%" height = "45%" style="float:right;margin:0px 10px 0px 0px">
+<img src="website-images/mechanical/sprint_2-2.gif" width ="45%" height = "55%" style="float:right;margin:50px 10px 0px 0px">
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
@@ -35,7 +35,7 @@ For Sprint 3, we did make quite a jump in scale. We were able to get three moles
 ## Final Sprint
 
 <img src="website-images/mechanical/final-1.jpg" width ="45%" height = "55%" style="float:left;margin:0px 10px 0px 0px">
-<img src="website-images/mechanical/final-2.jpg" width ="50%" height = "45%" style="float:right;margin:30px 10px 0px 0px">
+<img src="website-images/mechanical/final-2.jpg" width ="50%" height = "45%" style="float:right;margin:50px 10px 0px 0px">
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
