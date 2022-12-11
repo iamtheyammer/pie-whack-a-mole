@@ -9,17 +9,13 @@ filename: index.md
 ### Project Description
 [...]
 
-### Project Sprints
-Our game leverages three main features in order to ensure a smooth gameflow for users: OpenCV, pygame, and OpenPose. Below is a detailed description of how each features is used within our game:
-- Sprint 1: [...]
+### Project Demo
 
-<img src="website-images/sprint1.png" width ="50%" height = "70%" style="float:center; margin: 0px 0px 0px 100px">
-<br><br>
+[Whac-A-Mole](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-- Sprint 2: [...]
+### Project Subteams
 
-<img src="website-images/sprint2.png" width ="50%" height = "70%" style="float:center; margin: 0px 0px 0px 100px">
-<br><br>
+- [Mechanical](./mechanical.md)
 
 ### Project Goals
 MVP:
@@ -44,16 +40,7 @@ MVP:
     2. Integrate software + hardware
 - Anmol: 
     1. Learn more about web-sockets and React. 
-    2. Write clean and well-documented code
-
-
-### Project Demo
-
-[Whac-A-Mole](https://www.youtube.com/watch?v=Sm--6dE8Xso)
-
-### Project Subteams
-
-- [Mechanical](./mechanical.md)
+    2. Write clean and well-documented code.  
 
 ### About the Creators
 
