@@ -58,6 +58,10 @@ def SerialRead():
     """
     line_of_data = serialPort.readline().decode().strip()
     if len(line_of_data) > 0:
-        return json.loads(line_of_data)
+        try:
+            data = json.loads(line_of_data)
+        except:
+            return SerialRead()
+        return data
     else:
         return SerialRead()

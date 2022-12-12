@@ -21,6 +21,8 @@ function App() {
   const [displayedInput, setDisplayedInput] = useState("");
   const [userInput, setUserInput] = useState("");
   const [submitAnimation, setSubmitAnimation] = useState(false);
+  const [bannerTrigger, setBannerTrigger] = useState(0);
+  const [gameState, setGameState] = useState("");
   const countdownRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -38,26 +40,34 @@ function App() {
       }
       setUserInput("")
       e.target.value = setDisplayedInput("")
+    } else if (userInput === "") {
+      alert("Please enter a name")
     } else {
-      sendMessage(JSON.stringify({ "action": "game_state", "gameState": "start_game", "currentPlayer": userInput }))
+      const game_state = "playing_game"
+      setGameState(game_state)
+      sendMessage(JSON.stringify({ "action": "game_state", "gameState": game_state, "currentPlayer": userInput }))
       e.target.value = setDisplayedInput("")
-      setSubmitAnimation(true)
+      setBannerTrigger((prev) => prev + 1)
       countdownRef.current.start()
     }
   }
 
   const handleInputChange = (e) => {
-    if (e.target.value[0] === "/") {
-      setUserInput((prev) => `${prev + e.target.value.slice(-1)}`)
-      setDisplayedInput(`/${"*".repeat(e.target.value.length - 1)}`)
-    } else {
-      setUserInput(e.target.value)
-      setDisplayedInput(e.target.value)
+    if (gameState !== "playing_game") {
+      if (e.target.value[0] === "/") {
+        setUserInput((prev) => `${prev + e.target.value.slice(-1)}`)
+        setDisplayedInput(`/${"*".repeat(e.target.value.length - 1)}`)
+      } else {
+        setUserInput(e.target.value)
+        setDisplayedInput(e.target.value)
+      }
     }
   }
 
   const timerEndHandler = () => {
-    sendMessage(JSON.stringify({ "action": "game_state", "gameState": "end_game", "currentPlayer": userInput }))
+    let game_state = "end_game"
+    setGameState(game_state)
+    sendMessage(JSON.stringify({ "action": "game_state", "gameState": game_state, "currentPlayer": userInput }))
     setUserInput("")
   }
 
@@ -69,8 +79,8 @@ function App() {
     setSubmitAnimation(true)
     setTimeout(() => {
       setSubmitAnimation(false);
-    }, 500);
-  }, [submitAnimation]);
+    }, 1000);
+  }, [bannerTrigger]);
 
   const countdownRenderer = ({ minutes, seconds, completed }) => {
     if (completed) {
@@ -103,6 +113,7 @@ function App() {
         return;
       case "update_leaderboard":
         setLeaders(data.leaderboard);
+        console.log(data)
         return;
       default:
         console.log(`unrecognized websocket action: ${data}`);

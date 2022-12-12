@@ -47,7 +47,6 @@ body {
     display: inline-block;
     position: relative;
     max-height: 240px;
-    ;
 }
 
 .TopAnimation>div:nth-child(2) {
@@ -97,6 +96,7 @@ body {
     padding: 0.5rem;
     color: whitesmoke;
     font-family: "VT323", monospace;
+    min-width: 225px;
 }
 
 h1 {
