@@ -2,6 +2,10 @@
 #include <ArduinoJson.h>
 #include <mole.h>
 
+uint32_t timeout_after_raise = 250;
+uint32_t timeout_after_hit = 5000;
+uint32_t timeout_after_timeup = 1500;
+
 Mole::Mole(int sp, int bp) {
   pinMode(buttonPin, INPUT);
   pinMode(solenoidPin, OUTPUT);
@@ -13,9 +17,10 @@ Mole::Mole(int sp, int bp) {
   isUp = false;
   upFor = 0;
   timeUp = 0;
+  timeout = 0;
 }
 
-int Mole::lower(int time) {
+int Mole::lower(unsigned long time) {
   digitalWrite(solenoidPin, LOW);
 
   int upDuration = time - timeUp;
@@ -23,11 +28,12 @@ int Mole::lower(int time) {
   timeUp = 0;
   isUp = false;
   upFor = 0;
+  timeout = time + timeout_after_hit;
 
   return upDuration;
 }
 
-bool Mole::raiseFor(int currentTime, int ms) {
+bool Mole::raiseFor(unsigned long currentTime, int ms) {
   // raise the mole for ms
 
   // raise the mole
@@ -35,6 +41,7 @@ bool Mole::raiseFor(int currentTime, int ms) {
  
   timeUp = currentTime;
   upFor = ms;
+  timeout = currentTime + timeout_after_raise;
   
   if (isUp) {
     return false;
@@ -44,11 +51,12 @@ bool Mole::raiseFor(int currentTime, int ms) {
   return isUp;
 }
 
-bool Mole::lowerIfTimePassed(int time) {
+bool Mole::lowerIfTimePassed(unsigned long time) {
   // lower the mole if it's been up for long enough
 
   if (isUp && time - timeUp >= upFor) {
     lower(time);
+    timeout = time + timeout_after_timeup;
     return true;
   }
 
@@ -60,7 +68,7 @@ void Mole::print() {
   Serial.println();
 }
 
-JsonObject Mole::toJson() {
+StaticJsonDocument<64> Mole::toJson() {
   StaticJsonDocument<64> doc;
 
   doc["type"] = "Mole";
@@ -70,5 +78,29 @@ JsonObject Mole::toJson() {
   doc["time_up"] = timeUp;
   doc["up_for"] = upFor;
 
-  return doc.as<JsonObject>();
+  return doc;
+}
+
+void Mole::tickTimeout(unsigned long time) {
+  // no timeout
+  if (timeout == 0) {
+    return;
+  }
+
+  // timeout is over
+  if (time >= timeout) {
+    timeout = 0;
+  }
+}
+
+bool Mole::timeoutIsActive(unsigned long time) {
+  if (timeout == 0) {
+    return false;
+  }
+
+  return time < timeout;
+}
+
+bool Mole::buttonPinIsHigh() {
+  return digitalRead(buttonPin) == HIGH;
 }
