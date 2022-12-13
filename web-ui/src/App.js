@@ -9,7 +9,7 @@ import BannerAnimator from "./BannerAnimator";
 import PlayerInput from "./PlayerInput";
 import mallet from "./mallet.png";
 import hole from "./hole.png";
-import Countdown from "react-countdown";
+import Countdown, { zeroPad } from "react-countdown";
 
 function App() {
   const { sendMessage, lastMessage, readyState } = useWebSocket(
@@ -23,6 +23,7 @@ function App() {
   const [submitAnimation, setSubmitAnimation] = useState(false);
   const [bannerTrigger, setBannerTrigger] = useState(0);
   const [gameState, setGameState] = useState("");
+  const [gameTimeCountdown, setGameTimeCountdown] = useState(Date.now() + 5000);
   const countdownRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -30,7 +31,6 @@ function App() {
     // TODO: strip whitespaces and cleanup input before sending
     // add screen goes red on wrong mole hit
     // add medals for top 3
-    // hide scrollbar on scroallable container, style it in css
     if (userInput[0] === "/") {
       if (userInput === `/${process.env.REACT_APP_LDB_RESET_PASS}`) {
         alert("Leaderboard reset")
@@ -43,9 +43,9 @@ function App() {
     } else if (userInput === "") {
       alert("Please enter a name")
     } else {
-      const game_state = "playing_game"
+      let game_state = "playing_game"
       setGameState(game_state)
-      sendMessage(JSON.stringify({ "action": "game_state", "gameState": game_state, "currentPlayer": userInput }))
+      sendMessage(JSON.stringify({ "action": "game_state", "gameState": game_state, "currentPlayer": userInput.trim() }))
       e.target.value = setDisplayedInput("")
       setBannerTrigger((prev) => prev + 1)
       countdownRef.current.start()
@@ -67,7 +67,9 @@ function App() {
   const timerEndHandler = () => {
     let game_state = "end_game"
     setGameState(game_state)
+    setGameTimeCountdown(Date.now() + 5000)
     sendMessage(JSON.stringify({ "action": "game_state", "gameState": game_state, "currentPlayer": userInput }))
+    setBannerTrigger((prev) => prev + 1)
     setUserInput("")
   }
 
@@ -87,14 +89,14 @@ function App() {
       return (
         <div className="countdownWrapper">
           <span className="countdownTitle">Timer</span>
-          <span className="countdown">{0}:{0}</span>
+          <span className="countdown">{"0"}:{"00"}</span>
         </div>
       )
     } else {
       return (
         <div className="countdownWrapper">
           <span className="countdownTitle">Timer</span>
-          <span className="countdown">{minutes}:{seconds}</span>
+          <span className="countdown">{minutes}:{zeroPad(seconds)}</span>
         </div>
       )
     }
@@ -131,7 +133,10 @@ function App() {
   return (
     <div className="App">
       <BannerAnimator submitted={submitAnimation}>
-        Whack A Mole
+        {
+          gameState === "playing_game" ?
+            "Game started!" : "Game over!"
+        }
       </BannerAnimator>
       <div className="AppContent">
         <div className="TopAnimation">
@@ -153,8 +158,7 @@ function App() {
             </div>
             <div>
               <Countdown
-                date={Date.now() + 10000}
-                zeroPadTime={2}
+                date={gameTimeCountdown}
                 renderer={countdownRenderer}
                 autoStart={false}
                 onComplete={timerEndHandler}

@@ -17,7 +17,7 @@ const GameBanner = styled.div`
 const BannerDiv = styled.div`
     position: absolute;
     z-index: 2;
-    left: 535px;
+    left: ${props => props.children==="Game started!" ? "535px" : "610px"};
 `;
 
 const BannerText = styled.span`
@@ -31,11 +31,11 @@ const BannerText = styled.span`
     padding: 10px;
 `;
 
-function BannerAnimator({ submitted }) {
+function BannerAnimator({ children, submitted }) {
     return (
         <BrigthnessBanner submitted={submitted}>
             <BannerDiv>
-                <BannerText>Game Started!</BannerText>
+                <BannerText>{children}</BannerText>
             </BannerDiv>
             <GameBanner submitted={submitted}/>   
         </BrigthnessBanner>

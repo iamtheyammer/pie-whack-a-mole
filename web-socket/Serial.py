@@ -7,7 +7,7 @@ ports = serial.tools.list_ports.comports()
 usb_port = None
 for port, desc, hwid in ports:
     # select the port that is connected to the Arduino
-    if port.split(".")[-1][:3] == "usb":
+    if port.split(".")[-1][:3] == "CM0":
         usb_port = port
 
 arduinoComPort = usb_port   # serial port of Arduino
@@ -63,5 +63,5 @@ def SerialRead():
         except:
             return SerialRead()
         return data
-    else:
-        return SerialRead()
+    # else:
+    #     return SerialRead()
