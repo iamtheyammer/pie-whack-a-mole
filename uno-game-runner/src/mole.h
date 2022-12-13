@@ -10,9 +10,12 @@ public:
   // if the mole is up
   bool isUp;
   // when the mole went up
-  int timeUp;
+  unsigned long timeUp;
   // how long the mole should be up for
-  int upFor;
+  uint32_t upFor;
+  // time until the mole can be pressed / go up
+  unsigned long timeout;
+  
 
   /* 
    Create a new mole.
@@ -21,10 +24,13 @@ public:
    @param buttonPin The pin that the mole's button is on.
    */
   Mole(int solenoidPin, int buttonPin);
-  bool raiseFor(int currentTime, int ms);
-  bool lowerIfTimePassed(int time);
-  int lower(int time);
+  bool raiseFor(unsigned long currentTime, int ms);
+  bool lowerIfTimePassed(unsigned long time);
+  int lower(unsigned long time);
+  void tickTimeout(unsigned long time);
+  bool timeoutIsActive(unsigned long time);
+  bool buttonPinIsHigh();
 
   void print();
-  JsonObject toJson();
+  StaticJsonDocument<64> toJson();
 };

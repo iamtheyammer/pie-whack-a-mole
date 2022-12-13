@@ -5,21 +5,20 @@
 /* SETTINGS */
 
 int maxMolesUp = 3;
-int moleUptimeBetweenMs[2] = {2000, 7500};
-
+int moleUptimeBetweenMs[2] = {1000, 2500};
+bool debug = false;
 /* END SETTINGS */
 
 Mole *moles[6] = {
-    new Mole(0, 8),
-    new Mole(1, 9),
-    new Mole(2, 10),
-    new Mole(3, 11),
-    new Mole(4, 12),
-    new Mole(5, 13)};
+    new Mole(13, 2),
+    new Mole(9, 6),
+    new Mole(8, 7),
+    new Mole(11, 4),
+    new Mole(10, 3),
+    new Mole(12, 5)
+};
 
-int numMolesUp = 0;
 bool gameRunning = true;
-int gameStartedAt = 0;
 
 StaticJsonDocument<64> moleHitDocument;
 
@@ -35,50 +34,51 @@ void sendMoleHit(int uptime)
 
 void moleISR(Mole *mole)
 {
+  // only works for moles that are up
+  if (!mole->isUp)
+  {
+    return;
+  }
+
   int uptime = mole->lower(millis());
 
   sendMoleHit(uptime);
 }
 
-void moleisr0() { moleISR(moles[0]); }
-void moleisr1() { moleISR(moles[1]); }
-void moleisr2() { moleISR(moles[2]); }
-void moleisr3() { moleISR(moles[3]); }
-void moleisr4() { moleISR(moles[4]); }
-void moleisr5() { moleISR(moles[5]); }
-
 void startGame()
 {
   gameRunning = true;
-  gameStartedAt = millis();
 }
 
 void stopGame()
 {
+  gameRunning = false;
+
   // lower all moles
-  for (int i = 0; i < 6; i++)
+  for (uint8_t i = 0; i < 6; i++)
   {
     moles[i]->lower(millis());
+    moles[i]->timeout = 0;
   }
 
   // reset game state
-  numMolesUp = 0;
-  gameRunning = false;
 }
 
-// void printMoleStatus() {
-//   // Serial.println("----- Mole statuses -----");
-//   // Serial.println("| 0 | 1 | 2 | 3 | 4 | 5 |");
-//   Serial.print("| ");
-//   for (int i = 0; i < 6; i++) {
-//     Serial.print(moles[i]->isUp ? "U" : "D");
-//     Serial.print(" | ");
-//   }
+void printMoleStatus()
+{
+  // Serial.println("----- Mole statuses -----");
+  // Serial.println("| 0 | 1 | 2 | 3 | 4 | 5 |");
+  Serial.print("| ");
+  for (uint8_t i = 0; i < 6; i++)
+  {
+    Serial.print(moles[i]->isUp ? "U" : "D");
+    Serial.print(" | ");
+  }
 
-//   Serial.println();
+  Serial.println();
 
-//   // Serial.println("\n-------------------------");
-// }
+  // Serial.println("\n-------------------------");
+}
 
 void setup()
 {
@@ -87,15 +87,9 @@ void setup()
   Serial.setTimeout(10);
 
   moleHitDocument["type"] = "mole_hit";
-
-  // attach interrupts
-  attachInterrupt(digitalPinToInterrupt(moles[0]->buttonPin), moleisr0, RISING);
-  attachInterrupt(digitalPinToInterrupt(moles[1]->buttonPin), moleisr1, RISING);
-  attachInterrupt(digitalPinToInterrupt(moles[2]->buttonPin), moleisr2, RISING);
-  attachInterrupt(digitalPinToInterrupt(moles[3]->buttonPin), moleisr3, RISING);
-  attachInterrupt(digitalPinToInterrupt(moles[4]->buttonPin), moleisr4, RISING);
-  attachInterrupt(digitalPinToInterrupt(moles[5]->buttonPin), moleisr5, RISING);
 }
+
+
 
 void loop()
 {
@@ -104,33 +98,92 @@ void loop()
     return;
   }
 
-  int time = millis();
+  unsigned long time = millis();
 
-  for (int i = 0; i < 6; i++)
+  bool didLower = false;
+  int numMolesUp = 0;
+  for (uint8_t i = 0; i < 6; i++)
   {
-    if (moles[i]->lowerIfTimePassed(time))
+    moles[i]->tickTimeout(time);
+    if (moles[i]->isUp)
     {
-      // Serial.println("time is up for mole " + String(i) + ", lowered");
-      // printMoleStatus();
-      numMolesUp--;
+      if(moles[i]->lowerIfTimePassed(time)) {
+        didLower = true;
+        if(debug) {
+          Serial.print("Time is up for mole ");
+          Serial.print(i);
+          Serial.print(", lowering. Current time: ");
+          Serial.println(time);
+          printMoleStatus();
+        }
+
+        // don't need to increment numMolesUp, since we're lowering one
+        // and the timeout is guaranteed active, we just set one when we lowered
+      } else {
+        // check if the mole's being hit
+        if (!moles[i]->timeoutIsActive(time) && moles[i]->buttonPinIsHigh())
+        {
+          int uptime = moles[i]->lower(time);
+          sendMoleHit(uptime);
+          
+          if(debug) {
+            Serial.print("Mole ");
+            Serial.print(i);
+            Serial.print(" was hit, lowering. Current time: ");
+            Serial.println(time);
+            printMoleStatus();
+          }
+          
+        } else {
+          numMolesUp++;
+        }
+      }
     }
   }
 
-  // now, choose how many moles to raise
+  if (didLower) {
+    return;
+  }
+
   if (numMolesUp < maxMolesUp)
   {
-    int moleToRaise = random(0, 6);
+    int moleIndexToRaise = random(0, 6);
+    Mole* moleToRaise = moles[moleIndexToRaise];
 
-    while (moles[moleToRaise]->isUp)
+    if (moleToRaise->isUp || moleToRaise->timeoutIsActive(time))
     {
-      moleToRaise = random(0, 6);
+      if(debug) {
+        Serial.print("-> Can't raise mole ");
+        Serial.print(moleIndexToRaise);
+        if(moleToRaise->isUp) {
+          Serial.print(", already up. Current time: ");
+        } else if(moleToRaise->timeoutIsActive(time)) {
+          Serial.print(", timeout active for another ");
+          Serial.print(moleToRaise->timeout - time);
+          Serial.print("ms. Current time: ");
+        }
+        Serial.println(time);
+      }
+      return;
     }
 
     int timeToRaise = random(moleUptimeBetweenMs[0], moleUptimeBetweenMs[1]);
-    moles[moleToRaise]->raiseFor(time, timeToRaise);
-    numMolesUp++;
+    moleToRaise->raiseFor(time, timeToRaise);
 
-    // Serial.println("raised  " + String(moleToRaise));
+    if(debug) {
+      Serial.print("Raising mole ");
+      Serial.print(moleIndexToRaise);
+      Serial.print(" for ");
+      Serial.print(timeToRaise);
+      Serial.print(", current time: ");
+      Serial.println(time);
+      printMoleStatus();
+    }
+    
+    moles[0]->raiseFor(time, timeToRaise);
+  }
+
+  if(debug) {
     // printMoleStatus();
   }
 }
@@ -202,7 +255,7 @@ void serialEvent()
     }
 
     output["game_running"] = gameRunning;
-    output["game_started_at"] = gameStartedAt;
+    // output["game_started_at"] = gameStartedAt;
 
     output["status"] = "success";
   }
