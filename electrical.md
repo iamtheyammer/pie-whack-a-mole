@@ -3,7 +3,8 @@ title: Whac-A-Mole
 layout: template
 filename: electrical.md
 --- 
-- [<-Back](./index.md)
+- [<-Back](./index.md) 
+
 # Electical System Breakdown
 
 ## Sprint 1
