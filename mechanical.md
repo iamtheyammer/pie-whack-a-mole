@@ -9,7 +9,7 @@ filename: mechanical.md
 
 ## Sprint 1
 
-<div style="display:flex;flex-direction:row;justify-content:space-evenly;padding:10px;max-width:700px">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
 <img src="website-images/mechanical/sprint_1-1.gif" width =auto height = "450px" padding = "5px">
 <img src="website-images/mechanical/sprint_1-2.gif" width =auto height = "450px" padding = "5px">
 </div>
@@ -18,7 +18,7 @@ For the first sprint, we wanted to create a proof of concept. We had a cam syste
 
 ## Sprint 2
 
-<div style="display:flex;flex-direction:row;justify-content:space-evenly;padding:10px;max-width:700px">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
 <img src="website-images/mechanical/sprint_2-1.gif" width =auto height = "450px" padding = "5px">
 <img src="website-images/mechanical/sprint_2-2.gif" width =auto height = "450px" padding = "5px">
 </div>
@@ -27,7 +27,7 @@ For Sprint 2, we were able to hook up one pneumatic piston to allow one mole to 
 
 ## Sprint 3
 
-<div style="display:flex;flex-direction:row;justify-content:space-evenly;padding:10px;max-width:700px">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
 <img src="website-images/mechanical/sprint_3-1.JPG" width =auto height = "450px" padding = "5px">
 <img src="website-images/mechanical/sprint_3-2.gif" width =auto height = "450px" padding = "5px">
 </div>
@@ -36,7 +36,7 @@ For Sprint 3, we did make quite a jump in scale. We were able to get three moles
 
 ## Final Sprint
 
-<div style="display:flex;flex-direction:row;justify-content:space-evenly;padding:10px;max-width:700px">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
 <img src="website-images/mechanical/final-1.jpg" width =auto height = "450px" padding = "5px">
 <img src="website-images/mechanical/final-2.jpg" width =auto height = "450px" padding = "5px">
 </div>
