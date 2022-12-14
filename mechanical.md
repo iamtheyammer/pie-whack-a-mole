@@ -3,12 +3,15 @@ title: Whac-A-Mole
 layout: template
 filename: mechanical.md
 --- 
-### Mechanical Systems Breakdown
+- [<-Back](./index.md)
+# Mechanical Systems Breakdown
 
 ## Sprint 1
 
-<img src="website-images/mechanical/sprint_1-1.gif" width ="45%" height = "45%" style="float:left;margin:0px 30px 0px 0px">
-<img src="website-images/mechanical/sprint_1-2.gif" width ="45%" height = "40%" style="float:right;margin:0px 30px 0px 0px">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
+<img src="website-images/mechanical/sprint_1-1.gif" width ="45%" height = "45%">
+<img src="website-images/mechanical/sprint_1-2.gif" width ="45%" height = "30%">
+</div>
 
 For the first sprint, we wanted to create a proof of concept. We had a cam system connected to a bar-linkage that pushed a mole up and down. A lot of our parts were made of PLA (3d printed) and fiberboard (laser cutted.) 
 
