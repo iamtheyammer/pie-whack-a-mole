@@ -7,17 +7,15 @@ filename: mechanical.md
 
 ## Sprint 1
 
-<img src="website-images/mechanical/sprint_1-1.gif" width ="45%" height = "45%" style="float:left;margin:0px 10px 0px 0px">
-<img src="website-images/mechanical/sprint_1-2.gif" width ="45%" height = "40%" style="float:right;margin:0px 10px 0px 0px">
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<img src="website-images/mechanical/sprint_1-1.gif" width ="45%" height = "45%" style="float:left;margin:0px 30px 0px 0px">
+<img src="website-images/mechanical/sprint_1-2.gif" width ="45%" height = "40%" style="float:right;margin:0px 30px 0px 0px">
 
 For the first sprint, we wanted to create a proof of concept. We had a cam system connected to a bar-linkage that pushed a mole up and down. A lot of our parts were made of PLA (3d printed) and fiberboard (laser cutted.) 
 
 ## Sprint 2
 
-<img src="website-images/mechanical/sprint_2-1.gif" width ="45%" height = "45%" style="float:left;margin:0px 10px 0px 0px">
-<img src="website-images/mechanical/sprint_2-2.gif" width ="45%" height = "55%" style="float:right;margin:50px 10px 0px 0px">
+<img src="website-images/mechanical/sprint_2-1.gif" width ="45%" height = "45%" style="float:left;margin:0px 30px 0px 0px">
+<img src="website-images/mechanical/sprint_2-2.gif" width ="45%" height = "55%" style="float:right;margin:50px 50px 0px 0px">
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 

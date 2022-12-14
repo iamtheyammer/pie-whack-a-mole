@@ -16,6 +16,7 @@ filename: index.md
 ### Project Subteams
 
 - [Mechanical](./mechanical.md)
+- [Mechanical](./electrical.md)
 
 ### Project Goals
 MVP:
