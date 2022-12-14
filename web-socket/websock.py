@@ -28,7 +28,10 @@ def scores_to_json(cursor):
 
 def calculate_score(serial_read):
     if serial_read is not None:
-        return (total_time - serial_read["uptime_ms"]) // 100
+        try:
+            return (total_time - serial_read["uptime_ms"]) // 100
+        except:
+            print(serial_read)
     else:
         return 0
 
@@ -88,7 +91,10 @@ def echo(sock):
     while True:
         serial_read = SerialRead()
         if game_state != "end_game":
-            serial_score += calculate_score(serial_read)
+            try:
+                serial_score += calculate_score(serial_read)
+            except:
+                print(serial_read)
         update_score_message(sock, serial_score)
         serial_score, game_state = receive_ws(sock, cursor, connection, serial_score, game_state)
         

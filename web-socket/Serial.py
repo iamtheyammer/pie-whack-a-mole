@@ -7,9 +7,8 @@ ports = serial.tools.list_ports.comports()
 usb_port = None
 for port, desc, hwid in ports:
     # select the port that is connected to the Arduino
-    if port.split(".")[-1][:3] == "CM0":
+    if "CM0" in port:
         usb_port = port
-
 arduinoComPort = usb_port   # serial port of Arduino
 
 baudRate = 9600            # baud rate of Arduino

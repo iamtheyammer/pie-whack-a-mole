@@ -23,7 +23,7 @@ function App() {
   const [submitAnimation, setSubmitAnimation] = useState(false);
   const [bannerTrigger, setBannerTrigger] = useState(0);
   const [gameState, setGameState] = useState("");
-  const [gameTimeCountdown, setGameTimeCountdown] = useState(Date.now() + 5000);
+  const [gameTimeCountdown, setGameTimeCountdown] = useState(Date.now() + 30000);
   const countdownRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -67,7 +67,7 @@ function App() {
   const timerEndHandler = () => {
     let game_state = "end_game"
     setGameState(game_state)
-    setGameTimeCountdown(Date.now() + 5000)
+    setGameTimeCountdown(Date.now() + 30000)
     sendMessage(JSON.stringify({ "action": "game_state", "gameState": game_state, "currentPlayer": userInput }))
     setBannerTrigger((prev) => prev + 1)
     setUserInput("")
