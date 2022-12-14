@@ -23,7 +23,7 @@ For the first sprint, we wanted to create a proof of concept. We had a cam syste
 <img src="website-images/mechanical/sprint_2-2.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
-For Sprint 2, we were able to hook up one pneumatic piston to allow one mole to go up and down with a larger linkage system. The pneumatic piston is connected to solenoid, which helps control whether there is pressurized air or atmospheric air in the system, which causes the mole to shoot up or come down. 
+For Sprint 2, we were able to hook up one pneumatic piston to allow one mole to go up and down with a larger linkage system. The pneumatic piston is connected to solenoid, which helps control whether there is pressurized air or atmospheric air in the system, which causes the mole to shoot up or come down. This sprint taught us to rely less on glue and to use utilizes more screws in the final for more durability and robustness for the 3rd sprint. 
 
 ## Sprint 3
 
@@ -41,4 +41,4 @@ For Sprint 3, we did make quite a jump in scale. We were able to get three moles
 <img src="website-images/mechanical/final-2.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
-For the final, the mech e team was able to connect six moles to the pneumatic system. With the offset linkage, we were able to minimize damage to the pneumatics themselves as there would be less direct force put onto them. At the end the system looked like a real arcade game, and was satisfying to see a finalized product we were proud of. (if we add a curtain or acrylic front, add info about that.)
+For the final, the mech e team was able to connect six moles to the pneumatic system. With the offset linkage, we were able to eliminate damage to the pneumatics themselves as there would be torque applied if connected directly (if a player hit a mole at an angle). At the end the system looked like a real arcade game, and it was satisfying to see a finished product we were proud of. 
