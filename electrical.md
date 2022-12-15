@@ -5,7 +5,106 @@ filename: electrical.md
 --- 
 [<-Back](./index.md) 
 
-# Electical System Breakdown
+## Overall Circuit Overview
+
+The circuit can be brokwn down into three main steps:
+
+1. The Arduino, for some reason (could be a hit, or it choosing for the mole to go up) chooses to change the state of a mole.
+2. The Arduino sends a signal (by setting a pin to high or low) to the MOSFET, turning it on/off and allowing/blocking current flow through the solenoid.
+3. The solenoid generates a magnetic field, which moves the plunger in the pneumatic system and causes the mole to pop up through the hole.
+
+As the game continues, the Arduino controls the movement of the moles by turning the MOSFETs on and off. The Arduino will also send data when moles are hit by the player over the serial connection to the Raspberry Pi, which will display the score and other information on the scoreboard.
+
+## Arduino Firmware Overview
+
+The firmware on the Arduino has three main responsibilities:
+
+- Randomly putting moles up and down
+- Checking for button presses (when moles are hit), then lowering moles when they're pressed
+- Communicating valid hits (button presses when the mole is up) to the Pi, with how long it took for the player to hit the mole
+
+We use one external library: Benoit Blanchon's excellent [ArduinoJSON](https://arduinojson.org/) library.
+This allows us to serialize output to the Pi and deserialize input from the Pi.
+
+### The `Mole` Class
+
+In order to do that, we wrote a class that controls a Mole. It has a few fields and methods:
+
+```cpp
+class Mole
+{
+public:
+  // pin the mole's solenoid is on
+  int solenoidPin;
+  // pin the mole's button is on
+  int buttonPin;
+  // if the mole is up
+  bool isUp;
+  // when the mole went up
+  unsigned long timeUp;
+  // how long the mole should be up for
+  uint32_t upFor;
+  // time until the mole can be pressed / go up
+  unsigned long timeout;
+  
+
+  /* 
+   Create a new mole.
+   @param solenoidPin The pin that the mole's solenoid is on.
+   @param buttonPin The pin that the mole's button is on.
+   */
+  Mole(int solenoidPin, int buttonPin);
+  bool raiseFor(unsigned long currentTime, int ms); // raise the mole for ms
+  bool lowerIfTimePassed(unsigned long time); // lower the mole if it has timed out
+  int lower(unsigned long time); // lower the mole whether it has timed out or not
+  void tickTimeout(unsigned long time); // clear the timeout if it has elapsed
+  bool timeoutIsActive(unsigned long time); // check whether there is active timeout
+  bool buttonPinIsHigh(); // check whether the mole's button is being pressed
+
+  void print(); // print the mole to the console, useful for debugging
+  StaticJsonDocument<64> toJson(); // return a JSON representation of the mole, useful for debugging
+};
+```
+
+### Setup and Configuration
+
+Some configuration settings are available and static as the code runs:
+
+- `int maxMolesUp` configures the maximum number of moles up at any one time
+- `int moleUpTimeBetweenMs[2]` is a tuple containing the minimum and maximum amounts of time in milliseconds that a mole can go up for. Amounts of time are chosen randomly using the first number in the tuple as the lowest possible value and the second number in the tuple as the maximum possible value.
+- `bool debug` determines whether the firmware will print debug messages to the console
+
+There are also some settings for the moles that effect gameplay:
+
+- `uint32_t timeout_after_raise` controls how long a mole has to wait before its button being pressed counts as a hit. Since the pneumatics exert so much force on the moles, the buttons often got pressed as they got shot up. This timeout ensures that it's a _player_ hitting the mole, not itself
+- `uint32_t timeout_after_hit` controls how long a mole has to wait after it has been hit down to come up again. It ensures that the same mole doesn't just go up, get hit, go down, and go back up immediately. We found that this made the game **far** more fun
+- `uint32_t timeout_after_timeup` controls how long a mole waits after it comes down when a player didn't hit it.
+
+A few global variables also hold some state:
+
+- `bool gameRunning` tells whether the game is running: if not, the entire game loop is skipped
+- `StaticJsonDocument<64> moleHitDocument` holds a JSON document in memory that we'll change and serialize to efficiently tell the Pi that a mole has been hit
+- `Mole *moles[6]` holds instances of all 6 moles, initialized with their solenoid pin and button pin
+
+Finally, the `setup()` function runs which just initializes Serial communication, and sets the Serial timeout to 10ms. It also sets the `moleHitDocument.type` property to `mole_hit`, which will never change.
+
+### The Game Loop
+
+The game loop, which just returns if `gameRunning` is false, has all of the core logic.
+
+1. First, we call the `millis()` function and assign it to a variable. Since we'll use this value many times, we can ensure that the value is always the same throughout a single 
+
+Each one allows the game loop (implemented in the Arduino `loop()`) to control the mole.
+
+I made a whack-a-mole game with six moles that can go up and down independently. Each mole is controlled by pneumatics connected to a solenoid controlled by a MOSFET connected to a digital pin on an Arduino Uno. The Arduino code has a "Mole class" which controls each mole. During each loop, the Arduino:
+- checks if any moles have timed out without being hit, and lowers them
+- raises a mole if less than three moles are currently up
+- clears moles' timeouts if they have elapsed
+- tells the Raspberry Pi if any moles have been hit
+
+Can you write a few paragraphs about how it works with code samples? Don't use words like "likely"-- I already wrote the code, and don't write out the full class-- just samples.
+
+## Sprint 1
 
 ## Sprint 1
 
