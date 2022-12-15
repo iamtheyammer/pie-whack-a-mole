@@ -5,7 +5,7 @@ filename: electrical.md
 --- 
 [<-Back](./index.md) 
 
-# Electical System Breakdown
+# Electrical System Breakdown
 
 ## Sprint 1
 
