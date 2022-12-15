@@ -7,13 +7,15 @@ filename: electrical.md
 
 ## Overall Circuit Overview
 
-The circuit can be brokwn down into three main steps:
+The circuit can be broken down into three main steps:
 
 1. The Arduino, for some reason (could be a hit, or it choosing for the mole to go up) chooses to change the state of a mole.
 2. The Arduino sends a signal (by setting a pin to high or low) to the MOSFET, turning it on/off and allowing/blocking current flow through the solenoid.
 3. The solenoid generates a magnetic field, which moves the plunger in the pneumatic system and causes the mole to pop up through the hole.
 
 As the game continues, the Arduino controls the movement of the moles by turning the MOSFETs on and off. The Arduino will also send data when moles are hit by the player over the serial connection to the Raspberry Pi, which will display the score and other information on the scoreboard.
+
+See the circuit diagram for more information on our wiring.
 
 ## Arduino Firmware Overview
 
@@ -55,10 +57,10 @@ public:
    */
   Mole(int solenoidPin, int buttonPin);
   bool raiseFor(unsigned long currentTime, int ms); // raise the mole for ms
-  bool lowerIfTimePassed(unsigned long time); // lower the mole if it has timed out
-  int lower(unsigned long time); // lower the mole whether it has timed out or not
+  bool lowerIfTimePassed(unsigned long time); // lower the mole if it has timed out, returns whether it was lowered
+  int lower(unsigned long time); // lower the mole whether it has timed out or not, returns how long it was up for
   void tickTimeout(unsigned long time); // clear the timeout if it has elapsed
-  bool timeoutIsActive(unsigned long time); // check whether there is active timeout
+  bool timeoutIsActive(unsigned long time); // check whether there is an active timeout
   bool buttonPinIsHigh(); // check whether the mole's button is being pressed
 
   void print(); // print the mole to the console, useful for debugging
@@ -92,60 +94,83 @@ Finally, the `setup()` function runs which just initializes Serial communication
 
 The game loop, which just returns if `gameRunning` is false, has all of the core logic.
 
-1. First, we call the `millis()` function and assign it to a variable. Since we'll use this value many times, we can ensure that the value is always the same throughout a single 
+1. First, we call the `millis()` function and assign it to a variable. Since we'll use this value many times, we can ensure that the value is always the same throughout a single function run and makes the function more efficient, which is important for reasons we'll discuss later.
+2. We run through all moles, and call their `tickTimeout` method with the `time` variable. This ensures that any timeouts that have elapsed are cleared.
+3. If the mole is up, we'll also:
+    - Lower it, if the player didn't hit it and it's been up for too long. If this happens, we'll set a `didLower` variable to true, which will cause us to skip to the next `loop()` iteration.
+    - If the mole is still up (didn't just get lowered), its timeout is **not** active, and its button pin is high, we'll lower the mole by calling `mole->lower(time)`, and tell the Pi that a mole has been hit, with the uptime value returned from the `lower` call.
+    - Finally, if the mole isn't currently being pressed, we'll increment a `numMolesUp` variable, which will tell us if we can raise a mole later on.
+4. Check if we can raise a mole (if `numMolesUp < maxMolesUp`). If we can:
+    - We'll use the `random(0, 6)` function to decide which mole we want to raise
+    - If that mole is up or its timeout is active, we'll just return and try again on the next `loop()` iteration
+    - Since it's not currently up, we'll choose how long it'll be up before it times out by calling `random(moleUptimeBetweenMs[0], moleUptimeBetweenMs[1])`
+    - Finally, we'll call `mole->raise(time, timeToRaise)`, which will raise the mole and set its timeouts
+
+#### Ensuring the Game Loop is Efficient
+
+Since the Uno only supports hardware interrupts on two pins, we can't use them for all six moles. This means we must use `digitalRead()` to check if a button is being pressed, and, since moles are momentarily hit, we need to check really often to ensure that we don't miss a hit.
+
+This means that the game loop must be as efficient as possible. We do this by:
+
+- Using the `millis()` function to get the current time, and storing it in a variable. This ensures that the value is always the same throughout a single function run, and makes the function more efficient
+- Only calling `digitalRead()`, a function that takes a non-insignificant time to run, on moles that are up and whose timeout is not active. This ensures that we only check the buttons of moles that are up and whose buttons can be pressed
+- Lowering the number of loops through the moles. Even though it's only six moles, if we reduce the number of loops from 4 to 2, we go from 24 to 12 loops per second, which is a 50% increase in efficiency (and we did this!)
+
+### Handling Input from the Pi
+
+We also use the [`serialEvent()` builtin interrupt function](https://docs.arduino.cc/built-in-examples/communication/SerialEvent) to detect Serial input from the Pi. When Serial data is available, this function is automatically called.
+
+Here, we:
+
+1. Check that the input is JSON, and try to decode it. If we can't decode it as JSON, we just print an error and return.
+2. Allocate memory for `JsonDocument`s that will hold the output value
+3. Read the `.action` property from the decoded input, and perform that action. The following self-explanatory actions are available: `start_game`, `stop_game`, and `get_status`.
 
 Each one allows the game loop (implemented in the Arduino `loop()`) to control the mole.
 
-I made a whack-a-mole game with six moles that can go up and down independently. Each mole is controlled by pneumatics connected to a solenoid controlled by a MOSFET connected to a digital pin on an Arduino Uno. The Arduino code has a "Mole class" which controls each mole. During each loop, the Arduino:
-- checks if any moles have timed out without being hit, and lowers them
-- raises a mole if less than three moles are currently up
-- clears moles' timeouts if they have elapsed
-- tells the Raspberry Pi if any moles have been hit
-
-Can you write a few paragraphs about how it works with code samples? Don't use words like "likely"-- I already wrote the code, and don't write out the full class-- just samples.
-
 ## Sprint 1
 
-## Sprint 1
-
-<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
-<img src="website-images/mechanical/sprint_1-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
-<img src="website-images/mechanical/sprint_1-2.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
+<img src="website-images/electrical/electrical-sprint-1.png" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
-In the first sprint, we focused on getting the Arduino to control a single mole using a servo motor. This involved connecting the servo motor to the Arduino and writing the necessary code to control the movement of the servo. The team was able to successfully get the servo to move the mole up and down, simulating the movement of a mole in a real-life whack-a-mole game, albeit much more slowly than we'd like in the final version.
+In the first sprint, we just reused code and our circuit from Mini Project 2 (servo motor control) to get a servo to go from 0 -> 360 -> 0 on loop. This made our mole go up and down.
 
 ## Sprint 2
 
 <div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
-<img src="website-images/mechanical/sprint_1-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
-<img src="website-images/mechanical/sprint_1-2.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/electrical/electrical-sprint-2-1.png" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/electrical/electrical-sprint-2-2.png" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
-In the second sprint, the team added the pneumatics to the circuit, connecting the Arduino to a MOSFET that controlled a solenoid, finally controlling a pneumatic system that uses compressed air to push the mole up and down through the hole. This allowed the mole to move more quickly and smoothly, creating a more realistic, challenging, and fun game.
+In the second sprint, we made a test circuit for the Arduino that let us test the game logic. It consisted of six buttons (which represented the buttons in the top of the moles) and six LEDs (which represented the state of the moles, up or down) connected with a 10K resistor to the Arduino. This allowed us to work on firmware separate from the mechanical team and we got the game logic largely done here-- we wrote the Mole class, implemented many methods and wrote the first version of the game logic, notably _without_ the timeouts.
+
+We also (and perhaps more importantly) made the solenoid control circuit. We used MOSFETs (electrical gates that control the flow of electricity in a circuit, and they allow a low-voltage device like an Arduino or a Pi to control a higher-voltage device like a 12V solenoid) to let the Arduino control the solenoids.
+
 
 ## Sprint 3
 
 <div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
-<img src="website-images/mechanical/sprint_1-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
-<img src="website-images/mechanical/sprint_1-2.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/electrical/electrical-sprint-3-1.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/electrical/electrical-sprint-3-2.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/electrical/electrical-sprint-3-3.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
-In the third sprint of the project, we expanded the circuit from one mole to six moles. This involved adding multiple solenoids, MOSFETs, and buttons to the circuit and writing code to control the movement of each mole individually and randomly. We got the Arduino to control the movement of all six moles, allowing multiple moles to go up and down with a hit or randomly with time, which increased the challenge and excitement of the game.
+In the third sprint of the project, we:
+
+- Wired up all the solenoids with color-coded wires with matching lengths (leftmost picture)
+- Used PIE-provided pin headers to connect the Arduino to the solenoids and the buttons in the top of the moles (second picture)
+- Set up the Arduino to be powered by the 12V solenoid power supply (the Uno `Vin` pin accepts between 7-12V!) (not pictured)
+- Wired up the buttons inside the moles to a separate breadboard (not pictured), which put a 10K resistor between the button and the Arduino's pin, and connected the Arduino's pin to ground, therefore keeping the pin Low until the button is pressed, at which point the pin goes High
+- Hot glued the solenoid wires to the breadboard-- **you shouldn't do this! Use an Arduino protoshield!** (third picture). We did this because we switched from having the Pi control the solenoids to having the Arduino control them, and we didn't have time to solder the wires to the protoshield
+- Got the Arduino to control the solenoids and the buttons in the top of the moles (not pictured)
 
 ## Final Sprint
 
-<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
-<img src="website-images/mechanical/sprint_1-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
-<img src="website-images/mechanical/sprint_1-2.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
-</div>
+In the final sprint of the project, we focused on playtesting and adjusting the code.
 
-In the final sprint of the project, we focused on getting the moles to move up and down randomly, as this is an essential element of the game. To achieve this, we wrote code to randomly move each mole, simulating the unpredictable behavior of real moles.
+As we played, it became clear that, since there was about a 1/4 chance for each mole to go up, the same moles were going up over and over again. We spent a bunch of time creating the timeout system that kept moles down for a certain amount of time after they were hit, and this made the game _significantly_ more fun, when the timeouts were right, and we found the right values with trial-and-error.
 
-The team also spent a significant amount of time debugging and playtesting the game to ensure that it was fun and challenging to play. This involved identifying and fixing any issues with the code or the circuit, as well as soliciting feedback from players and making adjustments to the game based on their suggestions.
+We also somewhat merged with the software team to ensure that the Serial output from the Arduino was in the correct format for the Pi to read, and we helped them work on the software to ensure we had a fully functional game on demo day, which we did!
 
-As we playtested, we found that in addition to getting the moles to move up and down randomly, we also had to write code to make each mole time out for a short period after it gets hit or goes down randomly. This prevents players from hitting the same mole multiple times in quick succession and makes the game more challenging, further increasing randomness.
-
-To implement this, we wrote code that kept track of the state of each mole (up or down) and the time it went into that state. When a mole was hit or went down randomly, the code would cause the mole to stay down for a predetermined amount of time before allowing it to pop up again. This created a more realistic and challenging gameplay experience, as players had to wait for the moles to pop up before they could hit them, and it made sure that one mole doesn't just keep coming up again and again.
-
-Overall, the code that made each mole time out added an extra level of complexity and challenge to the game, making it more realistic and engaging for players. This was an important element of the final sprint, as it helped to ensure that the game was fun and satisfying to play. It was really surprising how much of a difference this timeout code made.
+Finally, we went back to the game loop and optimized the software. This helped ensure that almost all mole hits registered and that the game loop ran at a consistent speed.

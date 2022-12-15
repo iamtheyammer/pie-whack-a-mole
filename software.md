@@ -10,7 +10,7 @@ filename: software.md
 ## Sprint 1
 
 <div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
-<img src="website-images/mechanical/sprint_1-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/software/sprint_1-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
 The first sprint of the project was focused on setting up the React frontend for the website and connecting it to a websocket hosted on a python Flask server. To test it, we sent a score update every second from the python server, which is displayed in the GIF above. We chose to use Flask with python since it can be easily integrated with PySerial in the future to communicate with the Arduino.
@@ -31,7 +31,7 @@ In the second sprint, we created the various components for the game, such as th
 <img src="website-images/mechanical/sprint_1-2.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
-In the third sprint of the project, we finished add more functionality to the Flask backend including writing to a SQlite database for leaderboard updates and connecting it to PySerial. The Flask backend reads from the Arudino serial output to receive information about when a mole was hit and how long it stayed up. It uses that information to calculate a score and assigns it to the current player, which is received from user input in the React frontend. It continuously reads from the serial output and send updates for the score display and writes a final score to the SQlite database when the game ends. The leaderboard is refreshed by sending an update to the React frontned at the end of the game. The SQlite database also implements features like only updating the leaderboard score of a player if it is higher than the previous score from their last played game.
+In the third sprint of the project, we finished adding more functionality to the Flask backend including writing to a SQlite database for leaderboard updates and connecting it to our Python code. The Flask backend reads from the Arudino serial output to receive information about when a mole was hit and how long it stayed up. It uses that information to calculate a score and assigns it to the current player, which is received from user input in the React frontend. It continuously reads from the serial output and send updates for the score display and writes a final score to the SQlite database when the game ends. The leaderboard is refreshed by sending an update to the React frontned at the end of the game. The code around our SQlite database also implements features like only updating the leaderboard score of a player if it is higher than the previous score from their last played game.
 
 ## Final Sprint
 
@@ -40,4 +40,4 @@ In the third sprint of the project, we finished add more functionality to the Fl
 <img src="website-images/mechanical/sprint_1-2.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
-In the final sprint we implemented final feature like a game countdown and a "Game Started!" and "Game Over!" banner. There were also quite a few expected bug fixes like score not resetting to zero and websocket time out issues. These were discovered during play testing and after a multiple hours of debugging the game was running smoother than the CSS animations. We also added some quality of life features like resetting the leaderboard when a correct password is entered after a "/" in the player name input. The final result was a beautiful website which added onto our amazing electrical and mechanical systems stitching everything together into an a fully functional arcade game.
+In the final sprint we implemented final features like a game countdown and a "Game Started!"/"Game Over!" banners. There were also quite a few expected bug fixes like the score not resetting to zero and websocket timeout issues. These were discovered during play testing, and after a multiple hours of debugging, the game was running smoother than the CSS animations (well, on the low-power Pi). We also added some quality-of-life features like resetting the leaderboard when a correct password is entered after a "/" in the player name input. The final result was a beautiful website which added onto our amazing electrical and mechanical systems stitching everything together into an a fully functional arcade game.
