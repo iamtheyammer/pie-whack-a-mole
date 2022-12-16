@@ -14,4 +14,7 @@ MVP:
 
 ## Project Demo
 
-[Whac-A-Mole](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+<video controls>
+  <source src="demo.mov" type="video/mov">
+Your browser does not support the video tag.
+</video>
