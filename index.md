@@ -1,10 +1,10 @@
 ---
-title: Whac-A-Mole
+title: Whack-A-Mole
 layout: template
 filename: index.md
 --- 
 ## Project Description
-[...]
+Whack-A-Mole is a well loved game that puts a player's reflexes to the test. Over the course of 30 seconds, moles pop up and the user only has a split second to whack the top before it disappears beneath the board. The game is enhanced with a score board that rewards the players with each hit and a leaderboard for some friendly competition. Overall, the game is fun and a great stress reliever for any player that steps up to the challenge.
 
 ## Project Goals
 MVP:

@@ -51,7 +51,8 @@ The mole in the first sprint was simply a stuffed animal created from scrap fabr
 
 <center>
 <img src="website-images/mechanical/first_mole.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">   
-
+</center>
+<center>
 First Mole and Hammer
 </center>
 
@@ -59,13 +60,17 @@ In the second sprint, a button was added to the top of a second mole. When the f
 
 <center>
 <img src="website-images/mechanical/button_holder.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
-Button Holster</center>
+</center>
+<center>
+Button Holster
+</center>
 
 This holster was then attached to the top of the mole shown in sprint 2. However in this version, the button could only be pressed if the player hit the top of the mole directly. Therefore the design didn’t change the issue that a player had to be very precise with their hits in order to get points.
 
 <center>
 <img src="website-images/mechanical/sprint_2.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
-
+</center>
+<center>
 Second Mole (Sprint 2)
 </center>
 
@@ -86,7 +91,8 @@ Once the system was fully operational, all 6 moles were completed and sewed onto
 
 <center>
 <img src="website-images/mechanical/end.jpg" style="width:auto;height:450px;padding:5px;max-width:100%;transform:rotate(90deg)">
-
+</center>
+<center>
 5 out of 6 moles before they were attached to the overall system
 </center>
 
