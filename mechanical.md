@@ -38,7 +38,7 @@ For Sprint 3, we did make quite a jump in scale. We were able to get three moles
 
 <div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
 <img src="website-images/mechanical/final-1.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
-<img src="website-images/mechanical/final-2.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/mechanical/final-2.png" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
 
 For the final, the mech e team was able to connect six moles to the pneumatic system. With the offset linkage, we were able to eliminate damage to the pneumatics themselves as there would be torque applied if connected directly (if a player hit a mole at an angle). At the end the system looked like a real arcade game, and it was satisfying to see a finished product we were proud of. 
