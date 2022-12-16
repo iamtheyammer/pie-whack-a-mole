@@ -49,27 +49,27 @@ For the final, the mech e team was able to connect six moles to the pneumatic sy
 
 The mole in the first sprint was simply a stuffed animal created from scrap fabric. This design was mainly to test if making a stuffed animal would help reduce the force on the pneumatic system by absorbing some of it when it compressed. Although the first mole didn’t have any special features, it provided proof of concept.
 
-<center>
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
 <img src="website-images/mechanical/first_mole.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">   
-</center>
+</div>
 <center>
 First Mole and Hammer
 </center>
 
 In the second sprint, a button was added to the top of a second mole. When the first mole was made, we originally thought that we would incorporate some kind of button underneath it. However, this design seemed to be impractical as we could only find small buttons that met our needs, meaning the player would have to be very precise to hit the button. So to address this issue, we designed a button holder that could be sewed to the top of the mole.
 
-<center>
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
 <img src="website-images/mechanical/button_holder.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
-</center>
+</div>
 <center>
 Button Holster
 </center>
 
 This holster was then attached to the top of the mole shown in sprint 2. However in this version, the button could only be pressed if the player hit the top of the mole directly. Therefore the design didn’t change the issue that a player had to be very precise with their hits in order to get points.
 
-<center>
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
 <img src="website-images/mechanical/sprint_2.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
-</center>
+</div>
 <center>
 Second Mole (Sprint 2)
 </center>
@@ -89,9 +89,9 @@ To fix the movement, we used hot glue to attach the holster to the ball. The hot
 
 Once the system was fully operational, all 6 moles were completed and sewed onto the system itself. Each pneumatics system had a plate with a bunch of holes so that the mole could be sewed to it easily.
 
-<center>
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
 <img src="website-images/mechanical/end.jpg" style="width:auto;height:450px;padding:5px;max-width:100%;transform:rotate(90deg)">
-</center>
+</div>
 <center>
 5 out of 6 moles before they were attached to the overall system
 </center>
