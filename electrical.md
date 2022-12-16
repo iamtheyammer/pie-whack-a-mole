@@ -138,7 +138,7 @@ In the first sprint, we just reused code and our circuit from Mini Project 2 (se
 
 ## Sprint 2
 
-<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
 <img src="website-images/electrical/electrical-sprint-2-1.png" style="width:auto;height:450px;padding:5px;max-width:100%">
 <img src="website-images/electrical/electrical-sprint-2-2.png" style="width:auto;height:450px;padding:5px;max-width:100%">
 </div>
@@ -150,7 +150,7 @@ We also (and perhaps more importantly) made the solenoid control circuit. We use
 
 ## Sprint 3
 
-<div style="display:flex;flex-direction:row;justify-content:center;padding:10px;max-width:600px">
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
 <img src="website-images/electrical/electrical-sprint-3-1.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
 <img src="website-images/electrical/electrical-sprint-3-2.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
 <img src="website-images/electrical/electrical-sprint-3-3.jpg" style="width:auto;height:450px;padding:5px;max-width:100%">
