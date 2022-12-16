@@ -9,7 +9,7 @@ filename: system.md
 
 ## System Diagram
 
-<img src="website-images/system/systemDiagram.png" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/system/systemDiagram.png" style="width:auto;height:420px;padding:5px;max-width:100%">
 
 ## Bill of Materials
 
