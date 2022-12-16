@@ -8,9 +8,18 @@ Whack-A-Mole is a well loved game that puts a player's reflexes to the test. Ove
 
 ## Project Goals
 MVP:
-1. Six moles randomly going up and down using a pneumatic system
-2. When moles are hit, score is calculated for the player
-3. A monitor that displays score
+
+- [x] Six moles randomly going up and down using a pneumatic system
+- [x] When moles are hit, score is calculated for the player
+- [x] A monitor that displays score
+
+Stretch Goals:
+
+- [x] A leaderboard that displays the top scores
+- [x] A timer that counts down from 30 seconds
+- [ ] Game sounds (ran out of time)
+- [ ] Painting and decorating the cabinet
+- [ ] Adding a front to the cabinet
 
 ## Project Demo
 

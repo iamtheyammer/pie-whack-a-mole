@@ -3,7 +3,7 @@ title: Whac-A-Mole
 layout: template
 filename: software.md
 --- 
-[<-Back](./index.md) 
+[← Back](./index.md) 
 
 # Software System Breakdown
 

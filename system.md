@@ -3,7 +3,7 @@ title: Whac-A-Mole
 layout: template
 filename: system.md
 --- 
-[<-Back](./index.md) 
+[← Back](./index.md) 
 
 # System Overview
 

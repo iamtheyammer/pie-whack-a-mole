@@ -3,7 +3,7 @@ title: About Us
 layout: template
 filename: aboutUS.md
 --- 
-[<-Back](./index.md) 
+[← Back](./index.md) 
 
 # About the Creators
 
@@ -31,15 +31,16 @@ Clay is a second year mechanical engineering student at Olin College. For this p
 
 **[Adhishri Hande](https://github.com/adhishrihande)** 
 Mechanical
-Adhishri is a mechanical engineer at Olin College. She mainly worked on the pneumatic mechanism on the inside of the arcade box, as well as helped design the outer structure. She learned a lot about dual acting pneumatics, as this was her first time using them, and learned a lot of new useful tools in SOLIDWORKS.
+Adhishri is a mechanical engineering student at Olin College. She mainly worked on the pneumatic mechanism on the inside of the arcade box, as well as helped design the outer structure. She learned a lot about dual acting pneumatics, as this was her first time using them, and learned a lot of new useful tools in SOLIDWORKS.
 
 <div style="height:50px;width:100%;display:inline-block"></div>
 
 <img src="website-images/aboutUs/sam.jpg" width =auto height = "175px" style="float:left;margin:0px 10px 0px 0px">
 
-**[Sam Mendelson](https://github.com/iamtheyammer)** 
+**[Sam Mendelson](https://sam.engineering)** 
 Electrical
-[...]
+Sam, a second year electrical engineering student at Olin College, worked on the electrical system for the game. He mainly worked on the high voltage circuitry and the MOSFETs that control the pneumatic system. He learned a lot about high voltage circuits and how to control them with MOSFETs. He also wrote the Arduino firmware.
+
 
 <div style="height:50px;width:100%;display:inline-block"></div>
 
@@ -47,11 +48,12 @@ Electrical
 
 **[Anmol Sandhu](https://github.com/AnmolRattanSingh)**
 Software
-Anmol is a software engineer at Olin College. He mainly worked on the website for the arcade game display and added features like player name input, game timer and a leaderboard. He learned a lot about web-sockets, PySerial and React. He also learned a lot about integrating software with electrical and managing game state.
+Anmol is a software engineering student at Olin College. He mainly worked on the website for the arcade game display and added features like player name input, the game timer and the leaderboard. He learned a lot about web-sockets, PySerial and React. He also learned a lot about integrating software with electrical and managing game state.
 
 <div style="height:30px;width:100%;display:inline-block"></div>
 
 ### Individual Learning Goals
+
 - Tyler:
     1. Utilizing the sprint format for rapid prototyping and idea generation
     2. Deciding the extent of sprints based on overall timeline.
