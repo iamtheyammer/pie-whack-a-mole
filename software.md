@@ -21,7 +21,7 @@ In the second sprint, we created the various components for the game, such as th
 
 ## Sprint 3
 
-<img src="website-images/software/sprint_3-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/software/sprint_3-1.gif" style="width:auto;height:450px;padding:5px;max-width:80%;border:1px black`">
 
 In the third sprint of the project, we finished add more functionality to the Flask backend including writing to a SQlite database for leaderboard updates and connecting it to PySerial. The Flask backend reads from the Arudino serial output to receive information about when a mole was hit and how long it stayed up. It uses that information to calculate a score and assigns it to the current player, which is received from user input in the React frontend. It continuously reads from the serial output and send updates for the score display and writes a final score to the SQlite database when the game ends. The leaderboard is refreshed by sending an update to the React frontned at the end of the game. The SQlite database also implements features like only updating the leaderboard score of a player if it is higher than the previous score from their last played game. The leaderboard was one of the most important features of the project adding another layer of interactivity which people enjoyed a lot on demo day.
 
