@@ -15,13 +15,13 @@ The first sprint of the project was focused on setting up the React frontend for
 
 ## Sprint 2
 
-<img src="website-images/mechanical/sprint_2-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
+<img src="website-images/software/sprint_2-1.gif" style="width:auto;height:450px;padding:5px;max-width:100%">
 
 In the second sprint, we created the various components for the game, such as the player name input, score display and the leaderboard. We used React's component approach to make it easy to reuse these components throughout the website. We also added state to the website to keep track of the player's score, game state and refresh the leaderboard everytime it is updated from a websocket call. Using Styled-Components in React we were also able to add a smooth CSS animation at the top of the website. The second sprint was focused on getting comfortable with React and setting up functionality to integrate game state updates from the Flask backend.
 
 ## Sprint 3
 
-<img src="website-images/software/sprint_3-1.png" style="width:auto;height:450px;padding:5px;max-width:80%;border:1px black`">
+<center><img src="website-images/software/sprint_3-1.png" style="width:auto;height:450px;padding:5px;max-width:80%;border:1px black`"></center>
 
 In the third sprint of the project, we finished add more functionality to the Flask backend including writing to a SQlite database for leaderboard updates and connecting it to PySerial. The Flask backend reads from the Arudino serial output to receive information about when a mole was hit and how long it stayed up. It uses that information to calculate a score and assigns it to the current player, which is received from user input in the React frontend. It continuously reads from the serial output and send updates for the score display and writes a final score to the SQlite database when the game ends. The leaderboard is refreshed by sending an update to the React frontned at the end of the game. The SQlite database also implements features like only updating the leaderboard score of a player if it is higher than the previous score from their last played game. The leaderboard was one of the most important features of the project adding another layer of interactivity which people enjoyed a lot on demo day.
 
