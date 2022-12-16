@@ -7,7 +7,11 @@ filename: aboutUS.md
 
 # About the Creators
 
-<img src="website-images/aboutUs/tyler.jpeg" width ="50%" height = "50%" style="float:left;margin:0px 10px 0px 0px">
+<img src="website-images/aboutUs/group.JPG" width =auto height = "70%" style="float:left;margin:0px 10px 0px 0px">
+
+<div style="height:50px;width:100%;display:inline-block"></div>
+
+<img src="website-images/aboutUs/tyler.jpg" width =auto height = "50%" style="float:left;margin:0px 10px 0px 0px">
 
 **[Tyler Ewald](https://github.com/tylerkwald)** 
 Mechanical
@@ -15,7 +19,7 @@ Tyler is a second year engineering student interested in mechanical as well as e
 
 <div style="height:50px;width:100%;display:inline-block"></div>
 
-<img src="website-images/aboutUs/clay.jpeg" width ="50%" height = "50%" style="float:left;margin:0px 10px 0px 0px">
+<img src="website-images/aboutUs/clay.jpg" width =auto height = "50%" style="float:left;margin:0px 10px 0px 0px">
 
 **[Clay Oates](https://github.com/HoneyBunches52)** 
 Mechanical
@@ -23,7 +27,7 @@ Clay is a second year mechanical engineering student at Olin College. For this p
 
 <div style="height:50px;width:100%;display:inline-block"></div>
 
-<img src="website-images/aboutUs/adhishri.jpeg" width ="50%" height = "50%" style="float:left;margin:0px 10px 0px 0px">
+<img src="website-images/aboutUs/adhishri.jpg" width =auto height = "50%" style="float:left;margin:0px 10px 0px 0px">
 
 **[Adhishri Hande](https://github.com/adhishrihande)** 
 Mechanical
@@ -31,7 +35,7 @@ Adhishri is a mechanical engineer at Olin College. She mainly worked on the pneu
 
 <div style="height:50px;width:100%;display:inline-block"></div>
 
-<img src="website-images/aboutUs/sam.jpeg" width ="50%" height = "50%" style="float:left;margin:0px 10px 0px 0px">
+<img src="website-images/aboutUs/sam.jpg" width =auto height = "50%" style="float:left;margin:0px 10px 0px 0px">
 
 **[Sam Mendelson](https://github.com/iamtheyammer)** 
 Electrical
@@ -39,7 +43,7 @@ Electrical
 
 <div style="height:50px;width:100%;display:inline-block"></div>
 
-<img src="website-images/aboutUs/anmol.jpeg" width ="50%" height = "50%" style="float:left;margin:0px 10px 0px 0px">
+<img src="website-images/aboutUs/anmol.jpg" width =auto height = "50%" style="float:left;margin:0px 10px 0px 0px">
 
 **[Anmol Sandhu](https://github.com/AnmolRattanSingh)**
 Software
