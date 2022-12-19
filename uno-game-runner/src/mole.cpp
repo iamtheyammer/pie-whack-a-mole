@@ -3,8 +3,8 @@
 #include <mole.h>
 
 uint32_t timeout_after_raise = 250;
-uint32_t timeout_after_hit = 5000;
-uint32_t timeout_after_timeup = 1500;
+uint32_t timeout_after_hit = 2750;
+uint32_t timeout_after_timeup = 1250;
 
 Mole::Mole(int sp, int bp) {
   pinMode(buttonPin, INPUT);
