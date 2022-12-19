@@ -17,6 +17,10 @@ As the game continues, the Arduino controls the movement of the moles by turning
 
 See the circuit diagram for more information on our wiring.
 
+<div style="display:flex;flex-direction:row;justify-content:center;padding:10px">
+<img src="website-images/electrical/circuit.png" style="width:auto;height:450px;padding:5px;max-width:100%">
+</div>
+
 ## Arduino Firmware Overview
 
 The firmware on the Arduino has three main responsibilities:
